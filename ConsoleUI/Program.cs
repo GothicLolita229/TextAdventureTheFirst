@@ -37,6 +37,7 @@ namespace ConsoleUI
             string[] sortedRoomArray = new string[] { "Entrance", "Foyer", "Great Hall", "Corridor", "Dungeon" };
             int locus = 0;
             string mover;
+            int numBumps = 0;
             // TO DO: Create variable for to name the rooms for the if statement
 
             #region displayRoomMenuAlpha
@@ -62,14 +63,32 @@ namespace ConsoleUI
                 if (mover == "n")
                 {
                     locus += 1;
+                    // loop through, take user input (n or s), and move through rooms up and down the array
+
+                    //TRY PUTTING THIS HERE SO IT EXITS PROGRAM AFTER USER DIES
+                    //currentRoom = roomArray[locus];
+                    //Console.WriteLine($"You are in the {currentRoom}.");
+
                     if (locus > roomArray.Length - 1)
                     {
+                        // if user selects this option 5 times, Tell them they are kaput and exit the program
                         //wrap around
                         locus = roomArray.Length - 1;
-                        Console.WriteLine("Please stop banging your head on the dungeon wall. You must turn around and go back because this is the end.");
-                        // if user selects this option 5 times, Tell them they are kaput and exit the program
+                        
+                        numBumps += 1;
+                        if (numBumps < 4)
+                        {
+                            Console.WriteLine("Please stop banging your head on the dungeon wall. You must turn around and go back because this is the end.");
+                        }
+                        else 
+                        {
+                            Console.WriteLine("You dead, Mr. Adventure Guy. Back to the beginning.");
+                            // write and call an exitMethod(); maybe
+                        }
+                        
+                        
                     }
-                    // loop through, take user input (n or s), and move through rooms up and down the array
+                    // MOVED THIS UP BEFORE TWO NESTED IFS
                     currentRoom = roomArray[locus];
                     Console.WriteLine($"You are in the {currentRoom}.");
 
