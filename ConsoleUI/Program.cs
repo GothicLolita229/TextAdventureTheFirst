@@ -12,21 +12,7 @@ using System.Threading.Tasks;
 */
 
 
-/* list ex. List<int> firstList = new List <int>();
-  
-            Console.WriteLine(firstlist.Count);
 
-
-            firstlist.Add(1);
-            firstlist.Add(2);
-            firstlist.Add(3);
-            firstlist.Add(4);
-
-            //Checking whether 4 is present
-            //in List or not
-            Console.Write(firstlist.Contains(4));
-
-*/
 namespace ConsoleUI
 {
     class Program
