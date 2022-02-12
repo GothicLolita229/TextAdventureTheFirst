@@ -194,6 +194,7 @@ namespace ConsoleUI
                 }
                 else if (mover == "Exit")
                 {
+                    Console.Clear();
                     MainMenu();
                 }
                 else
@@ -221,6 +222,11 @@ namespace ConsoleUI
             {
                 Console.WriteLine(weapon);
             }
+            /*if ()
+            {
+                MainMenu();
+            }
+            */
         }
 
         static void PotionsOption() 
