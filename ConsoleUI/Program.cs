@@ -31,6 +31,100 @@ namespace ConsoleUI
 {
     class Program
     {
+        static void Main(string[] args)
+        {
+            MainMenu();
+        }
+
+        static void MainMenu()
+        {
+
+            #region MainMenuArray
+
+            string userChoice;
+            Console.WriteLine("\n");
+            Console.WriteLine("MAIN MENU: ");
+
+            // array
+            string[] menuArray = new string[] { "Rooms", "Weapons", "Potions", "Treasure", "Items", "Mobs", "Exit" };
+
+            foreach (var menuItem in menuArray)
+            {
+                Console.WriteLine(menuItem);
+            }
+
+            // Ask "Would you like to expand a category to see what's inside? Enter category name from menu: "
+            // If user selects Rooms, display all rooms
+
+            do
+            {
+
+                Console.Write("Would you like to expand a category to see what's inside? Enter category name from menu: ");
+
+                userChoice = Console.ReadLine();
+                Console.WriteLine("\n");
+                Console.WriteLine($"Here are all the {userChoice} options: ");
+
+                if (userChoice == "Rooms")
+                {
+
+                    RoomOption();
+                }
+                else if (userChoice == "Weapons")
+                {
+                    WeaponsOption();
+                }
+                else if (userChoice == "Potions")
+                {
+                    PotionsOption();
+                }
+                else if (userChoice == "Treasure")
+                {
+                    TreasureOption();
+                }
+                else if (userChoice == "Items")
+                {
+                    ItemsListOption();
+                }
+                else if (userChoice == "Mobs")
+                {
+                    MobsListOption();
+                }
+                else if (userChoice == "Exit")
+                {
+                    Exit();
+                }
+                else
+                {
+                    Console.WriteLine("Not a valid option. Maybe check your case and spelling?");
+                }
+            }
+            while (userChoice != "Exit");
+
+            Console.Write("Press enter to exit...");
+            // Program ends
+            Console.ReadLine();
+
+            # region CommentsofThingsMightAdd
+
+            // loop through menuArray to select one option that links to an individual array or list
+            // Maybe use a for loop? or a do-while loop?
+            /* Do While Loop
+             * int count = 0;
+             * do
+             * {
+             *      Console.WriteLine(count);
+             *      count++;
+             * }
+             * while(count < 5);
+             * 
+             */
+            #endregion
+
+            #endregion
+
+        }
+
         static void RoomOption() 
         {
             string[] roomArray = new string[] { "Entrance", "Foyer", "Great Hall", "Corridor", "Dungeon" };
@@ -55,7 +149,7 @@ namespace ConsoleUI
             do
             {
                 var currentRoom = roomArray[0];
-                Console.WriteLine("Would you like to go North (n) or South (s)?");
+                Console.WriteLine("Would you like to go North (n) or South (s) or Exit?");
                 
                 mover = Console.ReadLine();
 
@@ -74,19 +168,25 @@ namespace ConsoleUI
                         // if user selects this option 5 times, Tell them they are kaput and exit the program
                         //wrap around
                         locus = roomArray.Length - 1;
-                        
+
                         numBumps += 1;
-                        if (numBumps < 4)
+                        if (numBumps == 1)
                         {
                             Console.WriteLine("Please stop banging your head on the dungeon wall. You must turn around and go back because this is the end.");
                         }
-                        else 
+                        else if (numBumps == 2)
+                        {
+                            Console.WriteLine("Seriously. Stop. You will DIE!");
+                        }
+                        else
                         {
                             Console.WriteLine("You dead, Mr. Adventure Guy. Back to the beginning.");
-                            // write and call an exitMethod(); maybe
+                            Console.ReadLine();
+                            Exit();
+                            // write and call an exitMethod(); maybe or just figure out some way to have the character respawn back to the main menu
                         }
-                        
-                        
+
+
                     }
                     // MOVED THIS UP BEFORE TWO NESTED IFS
                     currentRoom = roomArray[locus];
@@ -106,9 +206,13 @@ namespace ConsoleUI
                     currentRoom = roomArray[locus];
                     Console.WriteLine($"You are in the {currentRoom}.");
                 }
+                else if (mover == "Exit")
+                {
+                    MainMenu();
+                }
                 else
                 {
-                    Console.WriteLine("Invalid entry. Please enter (n) or (S)");
+                    Console.WriteLine("Invalid entry. Please enter (n) or (s) or Exit");
                 }
             }
             while (locus < 5);
@@ -182,90 +286,15 @@ namespace ConsoleUI
             }
         }
 
+        static void Exit()
+        {
+            Environment.Exit(0);
+        }
+
         // Maybe write an exit method? and ask "Are you sure?" once, then ask "Are you absolutely sure?" and if the answer to both is yes, the program quits
         #endregion
 
-        static void Main(string[] args)
-        {
-            #region MainMenuArray
+        
 
-
-            string userChoice;
-            Console.WriteLine("Main Menu: ");
-
-            // array
-            string[] menuArray = new string[] { "Rooms", "Weapons", "Potions", "Treasure", "Items", "Mobs", "Exit" };
-
-            foreach (var menuItem in menuArray)
-            {
-                Console.WriteLine(menuItem);
-            }
-
-            // Ask "Would you like to expand a category to see what's inside? Enter category name from menu: "
-            // If user selects Rooms, display all rooms
-
-            do
-            {
-
-                Console.Write("Would you like to expand a category to see what's inside? Enter category name from menu: ");
-
-                userChoice = Console.ReadLine();
-
-                Console.WriteLine($"Here are all the {userChoice} options: ");
-
-                if (userChoice == "Rooms")
-                {
-                    RoomOption();
-                }
-                else if (userChoice == "Weapons")
-                {
-                    WeaponsOption();
-                }
-                else if (userChoice == "Potions")
-                {
-                    PotionsOption();
-                }
-                else if (userChoice == "Treasure")
-                {
-                    TreasureOption();
-                }
-                else if (userChoice == "Items")
-                {
-                    ItemsListOption();
-                }
-                else if (userChoice == "Mobs")
-                {
-                    MobsListOption();
-                }
-                else
-                {
-                    Console.WriteLine("Not a valid option. Maybe check your case and spelling?");
-                }
-            }
-            while (userChoice != "Exit");
-
-            Console.Write("Press enter to exit...");
-            // Program ends
-            Console.ReadLine();
-
-            # region CommentsofThingsMightAdd
-
-            // loop through menuArray to select one option that links to an individual array or list
-            // Maybe use a for loop? or a do-while loop?
-            /* Do While Loop
-             * int count = 0;
-             * do
-             * {
-             *      Console.WriteLine(count);
-             *      count++;
-             * }
-             * while(count < 5);
-             * 
-             */
-            #endregion
-
-            #endregion
-
-        }
     }
 }
