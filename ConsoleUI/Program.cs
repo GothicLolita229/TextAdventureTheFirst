@@ -31,6 +31,7 @@ namespace ConsoleUI
             Console.WriteLine("\n");
             Console.WriteLine("MAIN MENU: ");
 
+            
             // array
             string[] menuArray = new string[] { "Rooms", "Weapons", "Potions", "Treasure", "Items", "Mobs", "Exit" };
 
@@ -93,18 +94,6 @@ namespace ConsoleUI
 
             # region CommentsofThingsMightAdd
 
-            // loop through menuArray to select one option that links to an individual array or list
-            // Maybe use a for loop? or a do-while loop?
-            /* Do While Loop
-             * int count = 0;
-             * do
-             * {
-             *      Console.WriteLine(count);
-             *      count++;
-             * }
-             * while(count < 5);
-             * 
-             */
             #endregion
 
             #endregion
