@@ -2,23 +2,38 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 
 /**
-* 2/11/2022
+* 2/26/2022
 * CSC 153
 * Lourdes Linares
-* Text Adventure Version 1
+* Text Adventure Version 2
 */
 
+/*
+ * In this iteration of the Text Adventure, you will use what you learned about
+ * reading and writing files.
+ * After this project, there should no longer be any information hardcoded into your 
+ * program. You will need to create a text file that holds all the information. 
+ * You may do this in a CSV file or any format you wish. 
+ * When the Game starts it should load all the information. Then allow the user 
+ * to create a player that will then be written to a file with the player’s name.
+ * 
+ */
 
 
 namespace ConsoleUI
 {
     class Program
     {
+        //StreamWriter outputfile; -- not working as global object
+        //StreamReader inputfile; -- not working as global object
+
         static void Main(string[] args)
         {
+            string charName = PlayerInfo();
             MainMenu();
         }
 
@@ -99,6 +114,95 @@ namespace ConsoleUI
             #endregion
 
         }
+
+        #region player Information
+        static string PlayerInfo() 
+        {
+            string username;
+            Console.Write("Please enter your username: ");
+            username = Console.ReadLine();
+            
+            // does file with username.txt exist?
+            string charName = "";
+            try
+            {
+                
+                if (File.Exists(username + ".txt"))
+                {
+                    charName = ReturnPlayer(username);
+                    
+                }
+                else
+                {
+                    charName = NewPlayer(username);
+                    
+                }
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine("Error checking file...");
+            }
+            return charName;
+        }
+
+        static string NewPlayer(string username) 
+        {
+            // make file with username as name
+            
+
+            StreamWriter outputfile; //-- declare as global object to use for other methods
+
+            // variable called characters
+            string charName;
+            try
+            {
+                outputfile = File.CreateText(username + ".txt");
+                Console.WriteLine($"Welcome, {username}!");
+                Console.WriteLine("Let's create a character for you...");
+                //for some reason have to close file and then open again to append text
+                outputfile.Close();
+                try
+                {
+                    outputfile = File.AppendText(username + ".txt");
+                    // ask user what to name char
+                    Console.WriteLine("What would you like to name your character?");
+                    charName = Console.ReadLine();
+                    outputfile.WriteLine(charName);
+                    outputfile.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+                
+                
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Error making character...");
+                throw;
+            }
+            //outputfile.Close();
+            return charName;
+        }
+
+        static string ReturnPlayer(string username) 
+        {
+            // get input from file with playername.txt
+
+            StreamReader inputfile; //declare as global object to use for other methods
+            string charName;
+
+            inputfile = File.OpenText(username + ".txt");
+            charName = inputfile.ReadLine();
+            Console.WriteLine($"Welcome back, {username}!");
+
+            inputfile.Close();
+            return charName;
+        }
+
+        #endregion
 
         static void RoomOption() 
         {
