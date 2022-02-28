@@ -33,7 +33,7 @@ namespace ConsoleUI
 
         static void Main(string[] args)
         {
-            string charName = PlayerInfo();
+            //string charName = PlayerInfo();
             MainMenu();
         }
 
@@ -42,18 +42,41 @@ namespace ConsoleUI
 
             #region MainMenuArray
 
+            string charName = PlayerInfo();
             string userChoice;
             Console.WriteLine("\n");
             Console.WriteLine("MAIN MENU: ");
 
-            
-            // array
-            string[] menuArray = new string[] { "Rooms", "Weapons", "Potions", "Treasure", "Items", "Mobs", "Exit" };
+            List<string> menuList = new List<string>();
+
+            StreamReader inputfile;
+
+            try
+            {
+                inputfile = File.OpenText("optionsMenu.txt");
+
+                while (inputfile.EndOfStream == false)
+                {
+                    menuList.Add(inputfile.ReadLine());
+                }
+
+                inputfile.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.ReadKey();
+            }
+
+            string[] menuArray = menuList.ToArray();
 
             foreach (var menuItem in menuArray)
             {
                 Console.WriteLine(menuItem);
             }
+
+            Console.WriteLine("\n");
 
             // Ask "Would you like to expand a category to see what's inside? Enter category name from menu: "
             // If user selects Rooms, display all rooms
@@ -61,7 +84,7 @@ namespace ConsoleUI
             do
             {
 
-                Console.Write("Would you like to expand a category to see what's inside? Enter category name from menu: ");
+                Console.Write($"{charName}, would you like to expand a category to see what's inside? Enter category name from menu: ");
 
                 userChoice = Console.ReadLine();
                 Console.WriteLine("\n");
@@ -204,14 +227,43 @@ namespace ConsoleUI
 
         #endregion
 
+        
         static void RoomOption() 
         {
-            string[] roomArray = new string[] { "Entrance", "Foyer", "Great Hall", "Corridor", "Dungeon" };
-            string[] sortedRoomArray = new string[] { "Entrance", "Foyer", "Great Hall", "Corridor", "Dungeon" };
+
+
+            List<string> roomList = new List<string>();
+
+            StreamReader inputfile;
+
+            //TODO: Tried to call it only to get the charName but it runs the entire method so figure this out 
+            //string charName = PlayerInfo();
+
+            try
+            {
+                inputfile = File.OpenText("rooms.txt");
+
+                while (inputfile.EndOfStream == false)
+                {
+                    roomList.Add(inputfile.ReadLine());
+                }
+
+                inputfile.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.ReadKey();
+            }
+
+            string[] roomArray = roomList.ToArray();
+            string[] sortedRoomArray = roomList.ToArray();
+
             int locus = 0;
             string mover;
             int numBumps = 0;
-            // TO DO: Create variable for to name the rooms for the if statement
+            
 
             #region displayRoomMenuAlpha
             //puts room options in alphabetical order
@@ -307,7 +359,30 @@ namespace ConsoleUI
             // Stiletto, piercing, 1d10 damage
             // Long Spear, impaling, 1d20 damage
 
-            string[] weaponArray = new string[] { "Battle Axe", "Crossbow", "Stiletto", "Long Spear" };
+
+            List<string> weaponList = new List<string>();
+
+            StreamReader inputfile;
+
+            try
+            {
+                inputfile = File.OpenText("weapons.txt");
+
+                while (inputfile.EndOfStream == false)
+                {
+                    weaponList.Add(inputfile.ReadLine());
+                }
+
+                inputfile.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.ReadKey();
+            }
+
+            string[] weaponArray = weaponList.ToArray();
 
             Array.Sort(weaponArray);
 
@@ -315,16 +390,34 @@ namespace ConsoleUI
             {
                 Console.WriteLine(weapon);
             }
-            /*if ()
-            {
-                MainMenu();
-            }
-            */
         }
 
         static void PotionsOption() 
         {
-            string[] potionArray = new string[] { "Elixir of Health", "Oil of Sharpness" };
+
+            List<string> potionList = new List<string>();
+
+            StreamReader inputfile;
+
+            try
+            {
+                inputfile = File.OpenText("potions.txt");
+
+                while (inputfile.EndOfStream == false)
+                {
+                    potionList.Add(inputfile.ReadLine());
+                }
+
+                inputfile.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.ReadKey();
+            }
+
+            string[] potionArray = potionList.ToArray();
 
             Array.Sort(potionArray);
 
@@ -336,7 +429,31 @@ namespace ConsoleUI
 
         static void TreasureOption() 
         {
-            string[] treasureArray = new string[] { "Amulet of Proof against Detection and Location", "Gem of Brightness", "Orb of Dragonkind" };
+
+            List<string> treasureList = new List<string>();
+
+            StreamReader inputfile;
+
+            try
+            {
+                inputfile = File.OpenText("treasure.txt");
+
+                while (inputfile.EndOfStream == false)
+                {
+
+                    treasureList.Add(inputfile.ReadLine());
+
+                }
+                inputfile.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.ReadKey();
+            }
+
+            string[] treasureArray = treasureList.ToArray();
 
             Array.Sort(treasureArray);
 
@@ -346,11 +463,34 @@ namespace ConsoleUI
             }
         }
 
-        // lists
+        
+        #region LISTS
+        // LISTS
         static void ItemsListOption() 
         {
-            List<string> itemList = new List<string> { "Abacus", "Bag of Holding", "Vial", "Tinderbox" };
 
+            List<string> itemList = new List<string>();
+
+            StreamReader inputfile;
+
+            try
+            {
+                inputfile = File.OpenText("items.txt");
+
+                while (inputfile.EndOfStream == false)
+                {
+
+                    itemList.Add(inputfile.ReadLine());
+                }
+                inputfile.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.ReadKey();
+            }
+            
             itemList.Sort();
 
             foreach (var item in itemList)
@@ -361,7 +501,28 @@ namespace ConsoleUI
 
         static void MobsListOption() 
         {
-            List<string> mobsList = new List<string> { "Humans", "Zombies", "Rats", "Goblins", "Five Points Gang" };
+
+            List<string> mobsList = new List<string>();
+
+            StreamReader inputfile;
+
+            try
+            {
+                inputfile = File.OpenText("mobs.txt");
+
+                while (inputfile.EndOfStream == false)
+                {
+
+                    mobsList.Add(inputfile.ReadLine());
+                }
+                inputfile.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.ReadKey();
+            }
 
             mobsList.Sort();
 
@@ -370,6 +531,8 @@ namespace ConsoleUI
                 Console.WriteLine(mob);
             }
         }
+
+        #endregion
 
         static void Exit()
         {
