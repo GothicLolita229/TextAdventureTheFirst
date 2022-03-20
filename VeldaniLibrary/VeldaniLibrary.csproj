@@ -44,8 +44,8 @@
     <Compile Include="CombatClass.cs" />
     <Compile Include="MoverClass.cs" />
     <Compile Include="LoopClass.cs" />
-    <Compile Include="OptionMethods.cs" />
     <Compile Include="OptionsMenuClass.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -8,46 +8,92 @@ namespace VeldaniLibrary
 {
     public class OptionsMenuClass
     {
-        public static void ListOption(string input)
+        public static List<string> ListOption(string input)
         {
-
             List<string> optionList = LoopClass.ListFileReader($"{input}.txt");
 
-            optionList.Sort();
+            //optionList.Sort();
 
             foreach (var option in optionList)
             {
                 Console.WriteLine(option);
             }
+            return optionList;
         }
 
-        public static void ExploreMenu(char userChoice, string input)
+        public static void ExploreMenu(char userChoice)
         {
             switch (userChoice)
             {
                 case '1':
-                    OptionMethods.RoomOption();
+                    RoomOption();
                     break;
                 case '2':
-                    OptionMethods.WeaponsOption();
+                    WeaponsOption();
                     break;
                 case '3':
-                    OptionMethods.PotionsOption();
+                    PotionsOption();
                     break;
                 case '4':
-                    OptionMethods.TreasureOption();
+                    TreasureOption();
                     break;
                 case '5':
-                    OptionMethods.ItemsOption();
+                    ItemsOption();
                     break;
                 case '6':
-                    OptionMethods.MobsOption();
+                    MobsOption();
                     break;
                 default:
-                    OptionMethods.Exit();
+                    Exit();
                     break;
             }
+
+        }
+        public static void MainMenu()
+        {
+            ListOption("mainMenu");
         }
 
+        public static void RoomOption()
+        {
+            List<string> roomList = ListOption("rooms");
+            MoverClass.MoveThroughRooms(roomList);
+        }
+        public static void WeaponsOption()
+        {
+            // Battle Axe has slash damage of 1d20
+            // Crossbow, piercing, 1d10 damage
+            // Stiletto, piercing, 1d10 damage
+            // Long Spear, impaling, 1d20 damage
+
+            ListOption("weapons");
+
+        }
+        // TODO PROFESSOR make new method and pass the name of option as argument.
+        // Then make another class and within use
+        public static void PotionsOption()
+        {
+            ListOption("potions");
+        }
+        public static void TreasureOption()
+        {
+            ListOption("treasure");
+        }
+        #region LISTS
+        // LISTS
+        public static void ItemsOption()
+        {
+            ListOption("items");
+        }
+
+        public static void MobsOption()
+        {
+            ListOption("mobs");
+        }
+        #endregion
+        public static void Exit()
+        {
+            Environment.Exit(0);
+        }
     }
 }
