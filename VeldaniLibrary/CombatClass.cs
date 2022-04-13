@@ -9,19 +9,26 @@ namespace VeldaniLibrary
 {
     public class CombatClass
     {
-        public static void AttackPoints()
+        public static int Hp = 100;
+        //public static int newHp = 0;
+        public static int damage = 0;
+        public static int AttackPoints()
         {
-            var rand = new Random();
-            Console.WriteLine("Enter action: (a) for attack or any other key to exit.");
-            char userAction = Console.ReadLine()[0];
-            do
+            Random rand = new Random();
+            //char userAction;
+            Console.WriteLine("You are in a fight!");
+            damage = rand.Next(1, 20);
+            /*do
             {
-                Console.WriteLine("You are in a fight!");
-                int hp = rand.Next(1, 20);
-                Console.Write("You've taken " + hp + " points of damage");
-                Console.WriteLine();
+                //userAction = Console.ReadLine()[0];
             }
-            while (userAction != 'a');
+            while (userAction != 'a');*/
+            return damage;
+        }
+        public static int CalcHealth(ref int Hp, int damage)
+        {
+            Hp = Hp - damage;
+            return Hp;
         }
     }
 }

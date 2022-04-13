@@ -8,12 +8,12 @@ namespace VeldaniLibrary
 {
     public class OptionsMenuClass
     {
+
+        public List<string> roomList = new List<string>(ListOption("rooms"));
         public static List<string> ListOption(string input)
         {
             List<string> optionList = LoopClass.ListFileReader($"{input}.txt");
-
             //optionList.Sort();
-
             foreach (var option in optionList)
             {
                 Console.WriteLine(option);
@@ -47,17 +47,23 @@ namespace VeldaniLibrary
                     Exit();
                     break;
             }
-
         }
         public static void MainMenu()
         {
             ListOption("mainMenu");
         }
-
-        public static void RoomOption()
+        public static List<Room> RoomOption()
         {
-            List<string> roomList = ListOption("rooms");
-            MoverClass.MoveThroughRooms(roomList);
+            List<string> roomStrList = ListOption("rooms");
+            List<Room> roomList = new List<Room>();
+            foreach (var roomName in roomStrList)
+            {
+                Room myRoom = new Room();
+                myRoom.Name = roomName;
+                roomList.Add(myRoom);
+            }
+            return roomList;
+            //MoverClass.MoveThroughRooms(roomList);
         }
         public static void WeaponsOption()
         {
@@ -65,9 +71,7 @@ namespace VeldaniLibrary
             // Crossbow, piercing, 1d10 damage
             // Stiletto, piercing, 1d10 damage
             // Long Spear, impaling, 1d20 damage
-
             ListOption("weapons");
-
         }
         // TODO PROFESSOR make new method and pass the name of option as argument.
         // Then make another class and within use
@@ -79,18 +83,14 @@ namespace VeldaniLibrary
         {
             ListOption("treasure");
         }
-        #region LISTS
-        // LISTS
         public static void ItemsOption()
         {
             ListOption("items");
         }
-
         public static void MobsOption()
         {
             ListOption("mobs");
         }
-        #endregion
         public static void Exit()
         {
             Environment.Exit(0);

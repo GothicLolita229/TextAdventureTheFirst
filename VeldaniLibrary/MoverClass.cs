@@ -8,9 +8,50 @@ namespace VeldaniLibrary
 {
     public class MoverClass
     {
-        List<string> roomList = OptionsMenuClass.ListOption("rooms");
+        const int MAP_WIDTH = 3;
+        const int MAP_LENGTH = 3;
+        // AN - map is stacked so:
+        // north + 1
+        // south - 2
+        // east  + MAP_WIDTH
+        // west  - MAP_WIDTH
+        public static List<string> roomList = new List<string>(OptionsMenuClass.ListOption("rooms"));
+        public static int CharMoveNorth(ref int currentLocation)
+        {
+            if (currentLocation != (MAP_WIDTH - 1) && currentLocation != (MAP_WIDTH*2)-1 && currentLocation != (MAP_WIDTH*3)-1)
+            {
+                currentLocation++;
+            }
+            return currentLocation;
+        }
+        public static int CharMoveSouth(ref int currentLocation)
+        {
+            
+            if (currentLocation != 0 && currentLocation != MAP_WIDTH && currentLocation != MAP_WIDTH*2)
+            {
+                currentLocation--;
+            }
+            return currentLocation;
+        }
+        public static int CharMoveEast(ref int currentLocation)
+        {
+            if (currentLocation + MAP_WIDTH <= roomList.Count - 1)
+            {
+                currentLocation += MAP_WIDTH;
+            }
+            return currentLocation;
+        }
+        public static int CharMoveWest(ref int currentLocation)
+        {
+            if (currentLocation - MAP_WIDTH >= 0)
+            {
+                currentLocation -= MAP_WIDTH;
+            }
+            return currentLocation;
+        }
 
         #region brokenUpIntoMethods
+        /*
         public static int[] CharMoveNorth(ref int roomLength, int locus, int numBumps)
         {
             locus += 1;
@@ -80,7 +121,7 @@ namespace VeldaniLibrary
                 else if (mover == "Exit")
                 {
                     Console.Clear();
-                    OptionsMenuClass.MainMenu();
+                    break;
                 }
                 else
                 {
@@ -89,6 +130,7 @@ namespace VeldaniLibrary
             }
             while (locus < 5);
         } 
+        */
         #endregion
 
         #region allInOneMethod

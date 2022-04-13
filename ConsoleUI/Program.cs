@@ -7,28 +7,13 @@ using System.Threading.Tasks;
 using VeldaniLibrary;
 
 /**
-* 3/19/2022
+* 4/11/2022
 * CSC 153
 * Lourdes Linares
-* Text Adventure Version 3
+* Text Adventure Version 4
 */
 
-/*
- * In this iteration of the Text Adventure, you will be practicing and setting up for movement and combat in a larger game.
- * First, you will need to change the main menu to display the following:
- * 1.Move North
- * 2.Move South
- * 3.Attack
- * 4.Exit
- * Allow the user to make a choice. If they choose to move north the console will display the new room to the user in a 
- * numeric value starting at 1. If they choose south, then it will do the same thing however in reverse. Do not allow the 
- * location to drop below zero.
- * If they choose combat, then a random number from 1 to 20 should be taken away from a simulated Hit point count and then 
- * returned to display to the user.
- * To complete this part of the project you will need to use two “Void” methods and a “Value-Return” method. 
- * You will also need to use a few variables. Your methods will need to have parameters to accept arguments 
- * and they must be passed by reference.
- */
+
 
 namespace ConsoleUI
 {
@@ -42,53 +27,106 @@ namespace ConsoleUI
         }
         static void MainMenu()
         {
-            #region MainMenuArray
+            int currentLocation = 0 ;
+            int startHp = 100;
+            int newHp = 0;
+            int damage = 0;
+            //List<string> roomList = LoopClass.ListFileReader("rooms.txt");
+            List<string> roomStrList = LoopClass.ListFileReader("rooms.txt");
+            List<Room> roomList = new List<Room>();
+            int idNum = 0;
+            foreach (var roomName in roomStrList)
+            {
+                Room myRoom = new Room();
+                myRoom.Name = roomName;
+                myRoom.IdNumber = idNum;
+                myRoom.Description = "Description";
+                idNum++;
+                roomList.Add(myRoom);
+            }
 
+            #region MainMenuArray
             string charName = Player.PlayerInfo();
             char userChoice;
+           
             //List<string> roomList = OptionsMenuClass.ListOption("rooms");
-            Console.WriteLine("\n");
-            Console.WriteLine("MAIN MENU: ");
-            // TODO Display MainMenu();
-            OptionsMenuClass.MainMenu();
-
-            Console.WriteLine("\n");
-            // Ask "Would you like to expand a category to see what's inside? Enter category name from menu: "
-            // If user selects Rooms, display all rooms
+            Console.WriteLine("\nMAIN MENU: \n");
             do
             {
+                OptionsMenuClass.MainMenu();
                 //Console.Write($"{charName}, would you like to expand a category to see what's inside? Enter numeric value from menu: ");
                 Console.Write($"{charName}, enter numeric value from menu to select an option: ");
                 userChoice = Console.ReadLine()[0];
+                //menuOption = Console.ReadLine()[0];
                 Console.WriteLine("\n");
                 //Console.WriteLine($"Here are all the {userChoice} options: ");
+                Room thisRoom = roomList[currentLocation];
+                // Print out our current location
+                Console.WriteLine($"You are in {thisRoom.Name} ( {thisRoom.IdNumber} )");
+                Console.WriteLine(thisRoom.Description);
                 switch (userChoice)
                 {
                     case '1':
-                        /*MoverClass.CharMoveNorth(ref int roomLength, int locus, int numBumps);*/
-                        MoverClass.MoveThroughRooms(OptionsMenuClass.ListOption("rooms"));
+                        currentLocation = MoverClass.CharMoveNorth(ref currentLocation);
+                        //Console.WriteLine($"You are in {thisRoom.Name} {thisRoom.IdNumber}");
+                        if (currentLocation > roomList.Count - 1)
+                        {
+                            Console.WriteLine("Please stop banging your head on the dungeon wall. " +
+                                "You must turn around and go back because this is the end.");
+                        }
                         break;
                     case '2':
-                        /*MoverClass.CharMoveSouth(ref int roomLength, int locus);*/
-                        MoverClass.MoveThroughRooms(OptionsMenuClass.ListOption("rooms"));
-                        //OptionsMenuClass.WeaponsOption(); // TEST; change to above ref afterwards
+                        currentLocation = MoverClass.CharMoveSouth(ref currentLocation);
+                        //Console.WriteLine($"You are in {thisRoom.Name} {thisRoom.IdNumber}");
+                        if (currentLocation <= 0) 
+                        {
+                            Console.WriteLine("You'll stay here until you move in another direction.");
+                        }
                         break;
                     case '3':
-                        CombatClass.AttackPoints();
+                        currentLocation = MoverClass.CharMoveEast(ref currentLocation);
+                        //Console.WriteLine($"You are in {thisRoom.Name} {thisRoom.IdNumber}");
+                        if (currentLocation <= 0)
+                        {
+                            Console.WriteLine("You'll stay here until you move in another direction.");
+                        }
                         break;
                     case '4':
-                        OptionsMenuClass.Exit();
+                        currentLocation = MoverClass.CharMoveWest(ref currentLocation);
+                        //Console.WriteLine($"You are in {thisRoom.Name} {thisRoom.IdNumber}");
+                        if (currentLocation <= 0)
+                        {
+                            Console.WriteLine("You'll stay here until you move in another direction.");
+                        }
                         break;
                     case '5':
-                        OptionsMenuClass.ExploreMenu(userChoice);
+                        if (startHp >= 1)
+                        {
+                            //Console.WriteLine("Enter action: (a) for attack or any other key to exit.");
+                            damage = CombatClass.AttackPoints();
+                            Console.WriteLine($"You've taken {damage} points of damage");
+                            newHp = CombatClass.CalcHealth(ref startHp, damage);
+                            Console.WriteLine($"Your hp is at {newHp}\n");
+                        }
+                        else 
+                        {
+                            Console.WriteLine("You are dead.");
+                        }
+                        break;
+                    case '6':
+                        OptionsMenuClass.Exit();
+                        break;
+                    case '7':
+                        Console.WriteLine("Debug Menu");
+                        char menuOption = Console.ReadLine()[0];
+                        OptionsMenuClass.ExploreMenu(menuOption);
                         break;
                     default:
                         Console.WriteLine("Not a valid option. Maybe check your case and spelling?");
                         break;
                 }
             }
-            while (userChoice != '4');
-
+            while (userChoice != '6');
             Console.Write("Press enter to exit...");
             // Program ends
             Console.ReadLine();
