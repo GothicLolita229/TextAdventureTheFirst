@@ -7,16 +7,11 @@ using System.Threading.Tasks;
 using VeldaniLibrary;
 
 /**
-* 4/11/2022
+* 5/10/2022
 * CSC 153
 * Lourdes Linares
-* Text Adventure Version 4
+* Text Adventure Version 5
 */
-/**
- * The Player should now be able to move North, East, South, or West in your game. 
- * They should be able to pick up and drop items in the room. 
- * There should be a combat system in place so that the player can fight Mobs.
- **/
 
 
 namespace ConsoleUI
