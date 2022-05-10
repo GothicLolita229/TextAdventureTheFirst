@@ -12,7 +12,16 @@ using VeldaniLibrary;
 * Lourdes Linares
 * Text Adventure Version 5
 */
-
+/* *
+ * In this iteration of the Text Adventure, you will use what you learned about Inheritance.
+In-Text Adventure 4 you created Classes to create objects from. You should now have a program 
+with several classes in it. The problem with this is that several of the classes have the same fields
+or properties. We can simplify this since a lot of these classes belong together.
+ 
+The Player and The Monsters are both living creatures, so it would stand to reason 
+that they would have some of the same fields in them. Using what you have learned from Chapter 
+10 you can now create a Class that both the Player and Monster Classes can Inherit from such as HPs.
+ */
 
 namespace ConsoleUI
 {
