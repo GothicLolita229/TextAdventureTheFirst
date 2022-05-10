@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -21,8 +22,8 @@ namespace VeldaniLibrary
         private int _hp;
         private int _ac;
         private int _location;
-        private string _inventory;
-        private string _quests;
+        private List<Item> _inventory;
+        private List<string> _quests;
 
         public Player(string idNumber, string name, string password, string race, string playerClass, string description, int hp, int ac, int location, string inventory, string quests )
             :base(idNumber, name, race, playerClass, description, hp, ac)
@@ -35,15 +36,28 @@ namespace VeldaniLibrary
             _hp = hp;
             _ac = ac;
             _location = location;
-            _inventory = inventory;
-            _quests = quests;
+            
         }
         
         public string Password { get; set; }
         public string Location { get; set; }
         public string Inventory { get; set; }
         public string Quests { get; set; }
-                                             //Could use either a set value or
-                                           //random dice roll. Leaning towards random
+        //Could use either a set value or
+        //random dice roll. Leaning towards random
+        public static bool PasswordValidation(ref string password)
+        {
+            var regexItem = new Regex("[a-zA-Z0-9]");
+
+
+            if (regexItem.IsMatch(password) && Regex.IsMatch(password, "[A-Z]") && Regex.IsMatch(password, "[a-z]"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

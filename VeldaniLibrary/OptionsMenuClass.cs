@@ -66,12 +66,14 @@ namespace VeldaniLibrary
         }
         public static List<Room> RoomOption()
         {
+            int idNum;
             List<string> roomStrList = ListOptioncsv("rooms");
             List<Room> roomList = new List<Room>();
             foreach (var roomName in roomStrList)
             {
                 string[] tokens = roomName.Split(',');
-                Room myRoom = new Room(tokens[0], tokens[1], tokens[2], tokens[3]);
+                Int32.TryParse(tokens[0], out idNum);
+                Room myRoom = new Room(idNum, tokens[1], tokens[2], tokens[3]);
                 roomList.Add(myRoom);
             }
             return roomList;

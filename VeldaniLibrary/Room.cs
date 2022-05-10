@@ -8,7 +8,7 @@ namespace VeldaniLibrary
 {
     public class Room
     {
-        private string _idNumber;
+        private int _idNumber;
         private string _name;
         private string _description;
         private string _exit;
@@ -20,7 +20,7 @@ namespace VeldaniLibrary
 
         //public List<Item> bag;
         //private List<Weapon> weapons;
-        public Room(string idNumber, string name, string description, string exit)
+        public Room(int idNumber, string name, string description, string exit)
 ﻿        {
             _idNumber = idNumber;
             _name = name;
@@ -29,7 +29,7 @@ namespace VeldaniLibrary
             bag = new List<Item>();
         }
         public string Name{ get; set; }
-        public string IdNumber { get; set; }
+        public int IdNumber { get; set; }
         public string Description { get; set; }
         // TODO public string(?) Exit
         public string Exit { get; set; }
