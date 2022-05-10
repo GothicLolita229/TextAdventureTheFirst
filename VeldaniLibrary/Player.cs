@@ -9,91 +9,45 @@ namespace VeldaniLibrary
 {
     public class Player
     {
-        public static string PlayerInfo()
+        
+        private string _name;
+        private string _password; //The first time the player is created
+                                  //the password must meet a format
+                                  //1 Capital Letter, 1 lowercase letter,
+                                  //1 Special Character.
+        private string _race; //Elf, Human, Dwarf……etc
+        private string _playerClass; //Warrior, Mage, Thief, Cleric……etc
+        private int _hp;
+        private int _ac;
+        private int _location;
+        //private string _inventory;
+        //private string _quests;
+
+        public Player(int idNumber, string name, string password, string race, string playerClass, int hp, int ac, int location, string inventory, string quests )
         {
-            string username;
-            Console.Write("Please enter your username: ");
-            username = Console.ReadLine();
-
-            // does file with username.txt exist?
-            string charName = "";
-            try
-            {
-                if (File.Exists(username + ".txt"))
-                {
-                    charName = ReturnPlayer(username);
-                }
-                else
-                {
-                    charName = NewPlayer(username);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error checking file...");
-            }
-            return charName;
+            IdNumber = idNumber;
+            Name = name;
+            _password = password;
+            _race = race;
+            _playerClass = playerClass;
+            _hp = hp;
+            _ac = ac;
+            _location = location;
+            //_inventory = inventory;
+            //_quests = quests;
         }
-        public static string NewPlayer(string username)
-        {
-            // make file with username as name
-            StreamWriter outputfile;
-            string charName;
-            string playerRace;
-            string playerClass;
-            string playerWeapon;
-            try
-            {
-                outputfile = File.CreateText(username + ".txt");
-                Console.WriteLine($"Welcome, {username}!");
-                Console.WriteLine("Let's create a character for you...");
-                //for some reason have to close file and then open again to append text
-                outputfile.Close();
-                try
-                {
-                    outputfile = File.AppendText(username + ".txt");
-                    Console.WriteLine("What would you like to name your character?");
-                    charName = Console.ReadLine();
-                    Console.WriteLine("Choose and enter your race: ");
-                    playerRace = Console.ReadLine();
-                    Console.WriteLine("Choose and enter your class: ");
-                    playerClass = Console.ReadLine();
-                    Console.WriteLine("Choose and enter your weapon: ");
-                    playerWeapon = Console.ReadLine();
-                    outputfile.WriteLine(charName, playerRace, playerClass, playerWeapon);
-                    outputfile.Close();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    throw;
-                }
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Error making character...");
-                throw;
-            }
-            return charName;
-        }
-        public static string ReturnPlayer(string username)
-        {
-            // get input from file with playername.txt
-            StreamReader inputfile;
-            string charName;
 
-            inputfile = File.OpenText(username + ".txt");
-            charName = inputfile.ReadLine();
-            List<string> playerFile = LoopClass.ListFileReader($"{username}.txt");
+        public int IdNumber { get; set; }
+        public string Name { get; set; }
+        public string Password { get; set; }
+        public string Race { get; set; }
+        public string PlayerClass { get; set; } //Could use either a set value or
+                                           //random dice roll. Leaning towards random
+        public int HP { get; set; }
+        public int AC { get; set; }
 
-            foreach (var item in playerFile)
-            {
-                Console.WriteLine(item);
-            }
-            Console.WriteLine($"Welcome back, {username}!");
-
-            inputfile.Close();
-            return charName;
-        }
+        
+        
+        
     }
 }

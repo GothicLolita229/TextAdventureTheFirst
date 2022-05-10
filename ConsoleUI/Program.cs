@@ -12,7 +12,11 @@ using VeldaniLibrary;
 * Lourdes Linares
 * Text Adventure Version 4
 */
-
+/**
+ * The Player should now be able to move North, East, South, or West in your game. 
+ * They should be able to pick up and drop items in the room. 
+ * There should be a combat system in place so that the player can fight Mobs.
+ **/
 
 
 namespace ConsoleUI
@@ -46,7 +50,7 @@ namespace ConsoleUI
             }
 
             #region MainMenuArray
-            string charName = Player.PlayerInfo();
+            string charName = LoadPlayer.PlayerInfo();
             char userChoice;
            
             //List<string> roomList = OptionsMenuClass.ListOption("rooms");
@@ -64,6 +68,7 @@ namespace ConsoleUI
                 // Print out our current location
                 Console.WriteLine($"You are in {thisRoom.Name} ( {thisRoom.IdNumber} )");
                 Console.WriteLine(thisRoom.Description);
+                // TODO Move entire switch statement to something like a command class
                 switch (userChoice)
                 {
                     case '1':
@@ -100,8 +105,10 @@ namespace ConsoleUI
                         }
                         break;
                     case '5':
+                        // TODO Move entire to combat Class method and then just call method here
                         if (startHp >= 1)
                         {
+                            Console.WriteLine("You are in a fight!");
                             //Console.WriteLine("Enter action: (a) for attack or any other key to exit.");
                             damage = CombatClass.AttackPoints();
                             Console.WriteLine($"You've taken {damage} points of damage");

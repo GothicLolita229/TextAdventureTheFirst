@@ -9,6 +9,7 @@ namespace VeldaniLibrary
 {
     public class CombatClass
     {
+        // TODO Move to Console UI
         public static int Hp = 100;
         //public static int newHp = 0;
         public static int damage = 0;
@@ -16,7 +17,7 @@ namespace VeldaniLibrary
         {
             Random rand = new Random();
             //char userAction;
-            Console.WriteLine("You are in a fight!");
+            
             damage = rand.Next(1, 20);
             /*do
             {

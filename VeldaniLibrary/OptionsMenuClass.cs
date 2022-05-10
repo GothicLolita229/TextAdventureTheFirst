@@ -21,6 +21,18 @@ namespace VeldaniLibrary
             return optionList;
         }
 
+        public static List<string> ListOptioncsv(string input)
+        {
+            List<string> optionList = LoopClass.ListFileReader($"{input}.csv");
+            //optionList.Sort();
+            foreach (var option in optionList)
+            {
+                Console.WriteLine(option);
+            }
+            return optionList;
+        }
+
+
         public static void ExploreMenu(char userChoice)
         {
             switch (userChoice)
@@ -54,12 +66,12 @@ namespace VeldaniLibrary
         }
         public static List<Room> RoomOption()
         {
-            List<string> roomStrList = ListOption("rooms");
+            List<string> roomStrList = ListOptioncsv("rooms");
             List<Room> roomList = new List<Room>();
             foreach (var roomName in roomStrList)
             {
-                Room myRoom = new Room();
-                myRoom.Name = roomName;
+                string[] tokens = roomName.Split(',');
+                Room myRoom = new Room(tokens[0], tokens[1], tokens[2], tokens[3]);
                 roomList.Add(myRoom);
             }
             return roomList;
@@ -87,9 +99,22 @@ namespace VeldaniLibrary
         {
             ListOption("items");
         }
-        public static void MobsOption()
+        public static List<Mob> MobsOption()
         {
+            int hp;
+            int ac;
             ListOption("mobs");
+            List<string> mobStrList = ListOptioncsv("mobs");
+            List<Mob> mobList = new List<Mob>();
+            foreach (var mobName in mobStrList)
+            {
+                string[] tokens = mobName.Split(',');
+                Int32.TryParse(tokens[4], out hp);
+                Int32.TryParse(tokens[5], out ac);
+                Mob myMob = new Mob(tokens[0], tokens[1], tokens[2], tokens[3], hp, ac, tokens[6], tokens[7], tokens[8]);
+                mobList.Add(myMob);
+            }
+            return mobList;
         }
         public static void Exit()
         {
