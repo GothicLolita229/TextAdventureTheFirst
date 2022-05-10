@@ -52,9 +52,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="items.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\VeldaniLibrary\VeldaniLibrary.csproj">
       <Project>{fdd6b06e-2e08-41b4-9b9d-5a9cbe68b030}</Project>
       <Name>VeldaniLibrary</Name>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VeldaniLibrary
 {
-    public class Mob
+    public class Mob : LivingCreatures
     {
         private string _idNumber;
         private string _name;
@@ -18,28 +18,25 @@ namespace VeldaniLibrary
         private string _inventory;
         private string _description;
 
+        
         public Mob(string idNumber, string name, string race, string mobClass, int hp, int ac, string weapon, string description, string inventory)
+            :base(idNumber, name, race, mobClass, description, hp, ac)
         {
             _idNumber = idNumber;
             _name = name;
             _race = race;
             _mobClass = mobClass;
-            _hp = hp;
-            _ac = ac;
+            _hp = hp;                   //Could use either a set value or
+            _ac = ac;                   //random dice roll. Leaning towards random
             _weapon = weapon;
             _inventory = inventory;
             _description = description;
         }
 
-        public string IdNumber { get; set; }
-        public string Name { get; set; }
-        public string Race { get; set; }
+     
         public string MobClass { get; set; }
-        public int HP { get; set; } //Could use either a set value or
-                                           //random dice roll. Leaning towards random
-        public int AC { get; set; }
         public string Weapon { get; set; }
         public string Inventory { get; set; }
-        public string Description { get; set; }
+        
     }
 }

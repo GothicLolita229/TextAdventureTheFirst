@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace VeldaniLibrary
 {
-    public class Treasure
+    public class Treasure : Things
     {
-        private int _idNumber;
+        private string _idNumber;
         private string _name;
         private string _description;
         private string _questItem;
-        private int _price;
+        private string _price;
 
-        public Treasure(int idNumber, string name, string description, string questItem, int price)
+        public Treasure(string idNumber, string name, string description, string questItem, string price)
+            :base(idNumber, name, description, price)
         {
             _idNumber = idNumber;
             _name = name;
@@ -22,11 +23,8 @@ namespace VeldaniLibrary
             _questItem = questItem;
             _price = price;
         }
-
-        public string IdNumber { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        
         public string QuestItem { get; set; }
-        public string Price { get; set; }
+        
     }
 }
